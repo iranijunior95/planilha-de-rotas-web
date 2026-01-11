@@ -1,0 +1,26 @@
+.load-screen {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    cursor: not-allowed;
+}
+
+.load-screen.none {
+    display: none;
+}
+
+.spin {
+    width: 32px;
+    height: 32px;
+    color: #ffffff;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

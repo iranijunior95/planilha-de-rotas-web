@@ -1,0 +1,60 @@
+button {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.success {
+    background: #1F6F43;
+    color: #FFFFFF;
+}
+
+.success:hover {
+    background: #124B2B;
+}
+
+.success > .icon-span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.success > .icon-span > :first-child {
+    width: 18px;
+    height: 18px;
+    color: #FFFFFF;
+}
+
+.default {
+    background: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    color: #374151;
+}
+
+.default:hover {
+    background: #E5E7EB;
+}
+
+.default > .icon-span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.default > .icon-span > :first-child {
+    width: 18px;
+    height: 18px;
+    color: #374151;
+}

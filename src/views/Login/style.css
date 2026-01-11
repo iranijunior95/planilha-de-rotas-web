@@ -1,0 +1,130 @@
+.card-form {
+    width: 448px;
+    padding: 32px;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+.card-form-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.card-form-header > h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #111827;
+}
+
+.card-form-header > p {
+    font-size: 16px;
+    color: #4B5563;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.div-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.div-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.div-actions > a {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F6F43;
+}
+
+.check-container {
+    display: flex;
+    cursor: pointer;
+    gap: 8px;
+    font-size: 14px;
+    color: #374151;
+}
+
+/* Esconde o checkbox original */
+.check-container input {
+    display: none;
+}
+
+/* Quadrado customizado */
+.checkmark {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* Quando estiver marcado */
+.check-container input:checked + .checkmark {
+    background-color: #1D4ED8;
+    border-color: #1D4ED8;
+}
+
+/* Desenho do "check" */
+.check-container input:checked + .checkmark::after {
+    content: "";
+    position: absolute;
+    left: 3.5px;
+    top: -1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.div-divider {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.div-divider div {
+    border: 1px solid #D1D5DB;
+    display: flex;
+    flex: 1;
+}
+
+.div-divider > p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6B7280;
+}
+
+.div-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.div-register > p {
+    font-size: 14px;
+    color: #4B5563;
+}

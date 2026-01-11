@@ -6,3 +6,59 @@
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
+
+.Toastify__toast {
+  font-family: inherit !important;
+}
+
+.Toastify__close-button {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+
+  width: 20px !important;
+  height: 20px !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  line-height: 1 !important;
+
+  color: inherit !important;
+  cursor: pointer;
+}
+
+.Toastify__close-button svg {
+  width: 14px !important;
+  height: 14px !important;
+  display: block !important;
+  pointer-events: none;
+}
+
+.container {
+  background: #FAF8F8;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+.imgLogo01 {
+  width: 134px;
+  object-fit: cover;
+  user-select: none;
+}
+
+a {
+  text-decoration: none;
+}
