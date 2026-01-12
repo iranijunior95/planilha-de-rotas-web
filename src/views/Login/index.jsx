@@ -1,16 +1,17 @@
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { Zoom, toast } from 'react-toastify';
-import { useNavigate } from "react-router-dom";
 import { Mail, Lock, UserRoundPlus } from 'lucide-react';
 import ImgLogo from "../../assets/logo01.png";
 import Input from "../../components/Input";
 import Button from '../../components/Button';
-import "./style.css";
 import LoadScreen from '../../components/LoadScreen';
-import { useState } from 'react';
+import "./style.css";
 
 export default function Login() {
     const [load, setLoad] = useState(false);
+    
     const navigate = useNavigate();
 
     const { 
