@@ -2,7 +2,12 @@ import { lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { Zoom, ToastContainer } from "react-toastify";
 
-const Home = lazy(() => import("./views/Home"));
+//Layouts
+const LayoutLoginAndRegister = lazy(() => import("./views/layouts/LayoutLoginAndRegister"));
+const LayoutDefaultAdmin = lazy(() => import("./views/layouts/LayoutDefaultAdmin"));
+
+//Pagínas
+const Dashboard = lazy(() => import("./views/Dashboard"));
 const Employees = lazy(() => import("./views/Employees"));
 const Login = lazy(() => import("./views/Login"));
 const Register = lazy(() => import("./views/Register"));
@@ -16,15 +21,20 @@ export default function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/funcionarios" element={<Employees />} />
-          <Route path="/veiculos" element={<Vehicles />} />
-          <Route path="/viagens" element={<Trips />} />
-          <Route path="/relatorios" element={<Reports />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/recover-password" element={<RecoverPassword />} />
+          <Route element={<LayoutLoginAndRegister />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/recover-password" element={<RecoverPassword />} />
+          </Route>
+
+          <Route element={<LayoutDefaultAdmin />}>
+            <Route path="/adm" element={<Dashboard />} />
+            <Route path="/adm/dashboard" element={<Dashboard />} />
+            <Route path="/adm/funcionarios" element={<Employees />} />
+            <Route path="/veiculos" element={<Vehicles />} />
+            <Route path="/viagens" element={<Trips />} />
+            <Route path="/relatorios" element={<Reports />} />
+          </Route>
         </Routes>
       </BrowserRouter>
 

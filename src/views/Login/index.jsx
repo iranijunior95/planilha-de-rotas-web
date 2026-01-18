@@ -1,18 +1,16 @@
-import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { Zoom, toast } from 'react-toastify';
 import { Mail, Lock, UserRoundPlus } from 'lucide-react';
-import ImgLogo from "../../assets/logo01.png";
 import Input from "../../components/Input";
 import Button from '../../components/Button';
-import LoadScreen from '../../components/LoadScreen';
+import Dividers from '../../components/Dividers';
 import "./style.css";
 
 export default function Login() {
-    const [load, setLoad] = useState(false);
-    
     const navigate = useNavigate();
+    const { setTitle, setCaption, setIsLoad } = useOutletContext();
 
     const { 
         register, 
@@ -20,8 +18,13 @@ export default function Login() {
         formState: { errors } 
     } = useForm();
 
+    useEffect(() => {
+        setTitle("Fazer login");
+        setCaption("Entre na sua conta para continuar");
+    }, []);
+
     async function onSubmit(data) {
-        setLoad(true);
+        setIsLoad(true);
 
         try {
             const response = await fakeLogin(data.email, data.password);
@@ -44,7 +47,7 @@ export default function Login() {
                 transition: Zoom
             });
         } finally {
-            setLoad(false);
+            setIsLoad(false);
         }
     }
 
@@ -72,100 +75,77 @@ export default function Login() {
     }
 
     return (
-        <div className="container">
-            <img 
-                src={ImgLogo} 
-                alt="img-logo"
-                className="imgLogo01" 
-            />
-            
-            <div className="card-form">
-                <LoadScreen 
-                    status={load}
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <div className='div-inputs'>
+                <Input 
+                    forLabel="email"
+                    label="E-mail"
+                    icon={<Mail />}
+                    type="email"
+                    name="email"
+                    placeholder="mail@exemplo.com"
+                    messageError={errors.email?.message}
+                    {...register("email", { 
+                        required: "Por favor, informe seu e-mail.",
+                            pattern: {
+                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                message: "Por favor, informe um e-mail com formato valído."
+                            } 
+                    })}
                 />
-                
-                <div className="card-form-header">
-                    <h2>Fazer Login</h2>
-                    <p>Entre na sua conta para continuar</p>
+
+                <Input
+                    forLabel="senha"
+                    label="Senha"
+                    icon={<Lock />}
+                    type="password"
+                    name="senha"
+                    placeholder="Digite sua senha"
+                    messageError={errors.password?.message}
+                    {...register("password", { required: "Por favor, informe sua senha." })}
+                />
+
+                <div className="div-actions">
+                    <label className="check-container">
+                        <input
+                            type="checkbox"
+                            {...register("remember")}
+                        />
+                        <span className="checkmark"></span>
+                        Lembrar-me
+                    </label>
+
+                    <a
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            navigate("/recover-password");
+                        }}
+                    >
+                        Recuperar senha
+                    </a>
                 </div>
-
-                <form noValidate onSubmit={handleSubmit(onSubmit)}>
-                    <div className='div-inputs'>
-                        <Input 
-                            forLabel="email"
-                            label="E-mail"
-                            icon={<Mail />}
-                            type="email"
-                            name="email"
-                            placeholder="mail@exemplo.com"
-                            messageError={errors.email?.message}
-                            {...register("email", { 
-                                required: "Por favor, informe seu e-mail.",
-                                pattern: {
-                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                    message: "Por favor, informe um e-mail com formato valído."
-                                } 
-                            })}
-                        />
-
-                        <Input 
-                            forLabel="senha"
-                            label="Senha"
-                            icon={<Lock />}
-                            type="password"
-                            name="senha"
-                            placeholder="Digite sua senha"
-                            messageError={errors.password?.message}
-                            {...register("password", { required: "Por favor, informe sua senha." })}
-                        />
-
-                        <div className="div-actions">
-                            <label className="check-container">
-                                <input 
-                                    type="checkbox"
-                                    {...register("remember")} 
-                                />
-                                <span className="checkmark"></span>
-                                Lembrar-me
-                            </label>
-
-                            <a 
-                                href="#"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    navigate("/recover-password");
-                                }}
-                            >
-                                Recuperar senha
-                            </a>
-                        </div>
-                    </div>
-
-                    <Button 
-                        type="submit"
-                        text="Entrar"
-                        color="success"
-                    />
-
-                    <div className="div-divider">
-                        <div></div>
-                        <p>ou</p>
-                        <div></div>
-                    </div>
-
-                    <div className="div-register">
-                        <p>Ainda não tem uma conta?</p>
-
-                        <Button 
-                            type="button"
-                            text="Criar conta"
-                            icon={<UserRoundPlus />}
-                            color="default"
-                            onClick={() => navigate('/register')}
-                        />
-                    </div>
-                </form>
             </div>
-        </div>
+
+            <Button
+                type="submit"
+                text="Entrar"
+                color="success"
+            />
+
+            <Dividers />
+
+            <div className="div-register">
+                <p>Ainda não tem uma conta?</p>
+
+                <Button
+                    type="button"
+                    text="Criar conta"
+                    icon={<UserRoundPlus />}
+                    color="default"
+                    onClick={() => navigate('/register')}
+                />
+            </div>
+        </form>
     );
 }

@@ -4,7 +4,7 @@ export default function Button({ type, text, icon, color, onClick, ...rest }) {
     return (
         <button 
             type={type ?? "button"}
-            className={color}
+            className={`btn-component ${color}`}
             onClick={onClick}
             {...rest}
         >

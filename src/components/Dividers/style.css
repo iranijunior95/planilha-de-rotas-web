@@ -1,0 +1,19 @@
+.div-divider {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.div-divider div {
+    border: 1px solid #D1D5DB;
+    display: flex;
+    flex: 1;
+}
+
+.div-divider > p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6B7280;
+}

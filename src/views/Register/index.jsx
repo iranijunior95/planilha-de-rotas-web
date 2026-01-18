@@ -1,18 +1,16 @@
-import { useState } from 'react';
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { Zoom, toast } from 'react-toastify';
 import { UserRound, Mail, Lock, LogIn } from 'lucide-react';
-import ImgLogo from "../../assets/logo01.png";
 import Input from "../../components/Input";
 import Button from '../../components/Button';
-import LoadScreen from '../../components/LoadScreen';
+import Dividers from '../../components/Dividers';
 import "./style.css";
 
 export default function Register() {
-    const [load, setLoad] = useState(false);
-
     const navigate = useNavigate();
+    const { setTitle, setCaption, setIsLoad } = useOutletContext();
 
     const { 
         register, 
@@ -21,8 +19,13 @@ export default function Register() {
         formState: { errors } 
     } = useForm();
 
+    useEffect(() => {
+        setTitle("Criar conta");
+        setCaption("Comece criando sua conta");
+    }, []);
+
     async function onSubmit(data) {
-        setLoad(true);
+        setIsLoad(true);
 
         try {
             const response = await fakeRegister();
@@ -46,7 +49,7 @@ export default function Register() {
         } catch (error) {
             console.log(`Erro ao registrar usuario: ${error.message}`);
         } finally {
-            setLoad(false);
+            setIsLoad(false);
         }
         
         console.log(data);
@@ -64,90 +67,67 @@ export default function Register() {
     }
 
     return (
-        <div className="container">
-            <img 
-                src={ImgLogo} 
-                alt="img-logo"
-                className="imgLogo01" 
-            />
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <div className='div-inputs'>
+                <Input
+                    forLabel="nome"
+                    label="Nome completo"
+                    icon={<UserRound />}
+                    type="text"
+                    name="nome-completo"
+                    placeholder="Seu nome completo"
+                    messageError={errors.full_name?.message}
+                    {...register("full_name", { required: "Por favor, informe seu nome." })}
+                />
 
-            <div className="card-form">
-                <div className="card-form-header">
-                    <h2>Criar conta</h2>
-                    <p>Crie sua conta e comece agora mesmo</p>
-                </div>
+                <Input
+                    forLabel="email"
+                    label="E-mail"
+                    icon={<Mail />}
+                    type="email"
+                    name="email"
+                    placeholder="mail@exemplo.com"
+                    messageError={errors.email?.message}
+                    {...register("email", {
+                        required: "Por favor, informe seu e-mail.",
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: "Por favor, informe um e-mail com formato valído."
+                        }
+                    })}
+                />
 
-                <form noValidate onSubmit={handleSubmit(onSubmit)}>
-                    <div className='div-inputs'>
-                        <Input 
-                            forLabel="nome"
-                            label="Nome completo"
-                            icon={<UserRound />}
-                            type="text"
-                            name="nome-completo"
-                            placeholder="Seu nome completo"
-                            messageError={errors.full_name?.message}
-                            {...register("full_name", { required: "Por favor, informe seu nome." })}
-                        />
-
-                        <Input 
-                            forLabel="email"
-                            label="E-mail"
-                            icon={<Mail />}
-                            type="email"
-                            name="email"
-                            placeholder="mail@exemplo.com"
-                            messageError={errors.email?.message}
-                            {...register("email", { 
-                                required: "Por favor, informe seu e-mail.",
-                                pattern: {
-                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                    message: "Por favor, informe um e-mail com formato valído."
-                                } 
-                            })}
-                        />
-
-                        <Input 
-                            forLabel="senha"
-                            label="Senha"
-                            icon={<Lock />}
-                            type="password"
-                            name="senha"
-                            placeholder="Digite sua senha"
-                            messageError={errors.password?.message}
-                            {...register("password", { required: "Por favor, informe sua senha." })}
-                        />
-                    </div>
-
-                    <Button 
-                        type="submit"
-                        text="Cadastrar"
-                        color="success"
-                    />
-
-                    <div className="div-divider">
-                        <div></div>
-                        <p>ou</p>
-                        <div></div>
-                    </div>
-
-                    <div className="div-register">
-                        <p>Já tem uma conta?</p>
-
-                        <Button 
-                            type="button"
-                            text="Fazer login"
-                            icon={<LogIn />}
-                            color="default"
-                            onClick={() => navigate("/login")}
-                        />
-                    </div>
-                </form>
+                <Input
+                    forLabel="senha"
+                    label="Senha"
+                    icon={<Lock />}
+                    type="password"
+                    name="senha"
+                    placeholder="Digite sua senha"
+                    messageError={errors.password?.message}
+                    {...register("password", { required: "Por favor, informe sua senha." })}
+                />
             </div>
 
-            <LoadScreen 
-                status={load}
+            <Button
+                type="submit"
+                text="Cadastrar"
+                color="success"
             />
-        </div>
+
+            <Dividers />
+
+            <div className="div-register">
+                <p>Já tem uma conta?</p>
+
+                <Button
+                    type="button"
+                    text="Fazer login"
+                    icon={<LogIn />}
+                    color="default"
+                    onClick={() => navigate("/login")}
+                />
+            </div>
+        </form>
     );
 }
